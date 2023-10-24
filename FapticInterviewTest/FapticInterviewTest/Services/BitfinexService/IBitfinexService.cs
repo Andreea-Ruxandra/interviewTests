@@ -1,6 +1,4 @@
-﻿using FapticInterviewTest.Contracts.BitStampResponse;
-
-namespace FapticInterviewTest.Services.BitfinexService
+﻿namespace FapticInterviewTest.Services.BitfinexService
 {
     public interface IBitfinexService
     {

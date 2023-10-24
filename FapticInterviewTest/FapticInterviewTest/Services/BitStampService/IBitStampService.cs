@@ -1,4 +1,4 @@
-﻿using FapticInterviewTest.Contracts.BitStampResponse;
+﻿using FapticInterviewTest.Contracts.PricesResponse;
 
 namespace FapticInterviewTest.Services.BitStampService
 {
