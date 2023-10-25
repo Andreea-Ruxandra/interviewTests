@@ -25,6 +25,7 @@ http://localhost:5001/aggregatedbitcoinprices/start=2016-12-31T01:00:00&end=2016
 http://localhost:5001/getaveragepricesfromdb/start=2016-12-31T01:00:00&end=2016-12-31T12:00:00
 
 I've exposed other 2 endpoints which give the lists from the external sources:
+
 http://localhost:5001/bitstampohlc/marketSymbol=btcusd&end=2016-12-31T12:00:00&start=2016-12-31T01:00:00&limit=30&step=3600
-http://localhost:5001/bitfinexcandles/trade=trade:1h:tBTCUSD&end=1672534800000&start=1672531200000&limit=30
+http://localhost:5001/bitfinexcandles/trade=trade:1h:tBTCUSD&end=2016-12-31T12:00:00&start=2016-12-31T01:00:00&limit=30
 
