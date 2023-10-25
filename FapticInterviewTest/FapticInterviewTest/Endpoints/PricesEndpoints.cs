@@ -48,7 +48,7 @@ namespace FapticInterviewTest.Endpoints
         }
 
         /// <summary>
-        /// Method used to add the register the CRUD operations service in Dependency Injection - Program.cs class (repo pattern for data)
+        /// Method used to  register the CRUD operations service in Dependency Injection - Program.cs class (repo pattern for data)
         /// </summary>
         /// <param name="service"></param>
         public static void AddCRUDOperationsServices(this IServiceCollection service)
@@ -137,7 +137,8 @@ namespace FapticInterviewTest.Endpoints
                 return Results.Ok(aggregatedPrice);
             }
                 //default case if the price is in the database return it
-                return Results.Ok(alreadyExistsPrice.AveragePrice);
+                return alreadyExistsPrice is not null ? Results.Ok(alreadyExistsPrice.AveragePrice) : Results.NotFound();
+
         }
 
         internal static IResult GetAveragePricesFromDb(ICRUDOperationsRepo crudService,IPriceOperationsService priceService, DateTime start, DateTime end)
@@ -146,7 +147,8 @@ namespace FapticInterviewTest.Endpoints
             var averagePriceList = priceService.GetAveragePricesFromDb(crudService,start,end);
 
             //default case if the price is in the database return it
-            return Results.Ok(averagePriceList);
+            return Results.Ok(averagePriceList is not null ? Results.Ok(averagePriceList) : Results.NotFound());
+            
         }
     }
 }

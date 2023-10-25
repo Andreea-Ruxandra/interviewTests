@@ -8,10 +8,12 @@ namespace FapticInterviewTest.Services.CRUDOperationsRepository
     public class CRUDOperationsRepo : ICRUDOperationsRepo
     {
         private readonly PriceDbContext priceDbContext;
+        private readonly HttpClient _httpClient;
 
-        public CRUDOperationsRepo(PriceDbContext dbContext) {
+        public CRUDOperationsRepo(PriceDbContext dbContext, HttpClient httpClient) {
             
             priceDbContext = dbContext;
+            _httpClient = httpClient;
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace FapticInterviewTest.Services.CRUDOperationsRepository
 
         public PriceModel AlreadyExistsInDB(DateTime start, DateTime end)
         {
-            return priceDbContext.Prices.Where(x => x.Start == start && x.End == end).First();
+            return priceDbContext.Prices.Where(x => x.Start == start && x.End == end).FirstOrDefault();
         }
 
         /// <summary>

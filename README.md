@@ -15,7 +15,7 @@ This is my assessment. :D
 12. Open cmd as admin and install globally: dotnet ef tools with the following command: dotnet tool install --global dotnet-ef --version 6.*
 13. In cmd window go to the project path: cd C:\FapticInterviewTest\FapticInterviewTest\FapticInterviewTest   (for example purpose I've used my path)
 14. In cmd window type: dotnet-ef database update
-15. In cmd window type: dotnet-ef database update InitialCreat
+15. In cmd window type: dotnet-ef migrations add InitialCreate
 16. In cmd window type: dotnet-ef database update
 steps 4-8 will create the sql server database based on the pricemodel
 17. Run the project
