@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Qy52CU4XXHfgNrXC/SbUblSXnOHaQ/HE0Gn7DjcZ1I9uRJx3wDFkew8WnbFOxDskvzzxyWHFDhG/G6IPD/md2g==",
+  "dgSpecHash": "Hap8YWR3MQsPrzWnTkIlrqHguVgGJbfd62ow1YQUDfcgK6/vu7oeuew58T+hcPhZoCr1UHvixYGaLzNeqijz0A==",
   "success": true,
   "projectFilePath": "C:\\FapticInterviewTest\\FapticInterviewTest\\FapticInterviewTest\\FapticInterviewTest.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.entityframeworkcore.design\\7.0.12\\microsoft.entityframeworkcore.design.7.0.12.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\7.0.12\\microsoft.entityframeworkcore.relational.7.0.12.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\7.0.12\\microsoft.entityframeworkcore.sqlserver.7.0.12.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\7.0.12\\microsoft.entityframeworkcore.tools.7.0.12.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
