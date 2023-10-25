@@ -2,6 +2,7 @@
 using FapticInterviewTest.Models;
 using FapticInterviewTest.Services.BitfinexService;
 using FapticInterviewTest.Services.BitStampService;
+using FapticInterviewTest.Services.CRUDOperationsRepository;
 using FapticInterviewTest.Services.PriceOperationsService;
 using System.Diagnostics;
 
@@ -18,6 +19,7 @@ namespace FapticInterviewTest.Endpoints
             app.MapGet("/bitfinexcandles/trade={trade}&end={end}&start={start}&limit={limit}", GetBitfinexPrices);
             app.MapGet("/bitstampohlc/marketsymbol={marketsymbol}&end={end}&start={start}&limit={limit}&step={step}", GetBitStampPrices);
             app.MapGet("/aggregatedbitcoinprices/start={start}&end={end}&trade={trade}&marketsymbol={marketsymbol}&limit={limit}&step={step}", GetAggregatedBitcoinPrices);
+            app.MapGet("/getaveragepricesfromdb/start={start}&end={end}", GetAveragePricesFromDb);
         }
         /// <summary>
         ///  Method used to add the register the Bitfinex service in Dependency Injection - Program.cs class
@@ -43,6 +45,15 @@ namespace FapticInterviewTest.Endpoints
         public static void AddPriceOperationsServices(this IServiceCollection service)
         {
             service.AddHttpClient<IPriceOperationsService, PriceOperationService>();
+        }
+
+        /// <summary>
+        /// Method used to add the register the CRUD operations service in Dependency Injection - Program.cs class (repo pattern for data)
+        /// </summary>
+        /// <param name="service"></param>
+        public static void AddCRUDOperationsServices(this IServiceCollection service)
+        {
+            service.AddHttpClient<ICRUDOperationsRepo, CRUDOperationsRepo>();
         }
 
         /// <summary>
@@ -99,13 +110,12 @@ namespace FapticInterviewTest.Endpoints
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        internal static IResult GetAggregatedBitcoinPrices(PriceDbContext dbContext, IPriceOperationsService priceOperationService,IBitstampService bitStampService,IBitfinexService bitfinexService,string marketSymbol,string trade, int limit, int step, DateTime start, DateTime end)
-        {   
+        internal static IResult GetAggregatedBitcoinPrices(ICRUDOperationsRepo crudService, IPriceOperationsService priceOperationService,IBitstampService bitStampService,IBitfinexService bitfinexService,string marketSymbol,string trade, int limit, int step, DateTime start, DateTime end)
+        {
             //check if already we have in the database the price for the specific period of time
-            var alreadyExists = dbContext.Prices.Where(x => x.Start == start && x.End == end).FirstOrDefault();
-            
+            var alreadyExistsPrice = crudService.AlreadyExistsInDB(start, end);   
             //if not
-            if (alreadyExists == null)
+            if (alreadyExistsPrice == null)
             {   
                 //convert from datetime to unix timestamp(seconds) for bitstamp api
                 var bitStampStartTimeInt = priceOperationService.GetUnixTimestampSecFromDateTime(start);
@@ -121,20 +131,22 @@ namespace FapticInterviewTest.Endpoints
                 
                 //aggregate the lists with Querable.Average() method
                 var aggregatedPrice = priceOperationService.GetAggregatedPricesAsync(bitStampPricesList, bitfinexPricesList);
-                
-                //new price object created for inserting in DB with EF
-                PriceModel price = new PriceModel();
-                price.Start = start;
-                price.End = end;
-                price.AveragePrice = aggregatedPrice;
 
-                //insert the price record and save changes via EF
-                dbContext.Add(price);
-                dbContext.SaveChanges();
+                //insert the newly price in database 
+                crudService.AddPriceInDB(start, end, aggregatedPrice);
                 return Results.Ok(aggregatedPrice);
             }
                 //default case if the price is in the database return it
-                return Results.Ok(dbContext.Prices.Where(x => x.Start == start && x.End == end).Select(x => x.AveragePrice));
+                return Results.Ok(alreadyExistsPrice.AveragePrice);
+        }
+
+        internal static IResult GetAveragePricesFromDb(ICRUDOperationsRepo crudService,IPriceOperationsService priceService, DateTime start, DateTime end)
+        {   
+            //get the price list from db
+            var averagePriceList = priceService.GetAveragePricesFromDb(crudService,start,end);
+
+            //default case if the price is in the database return it
+            return Results.Ok(averagePriceList);
         }
     }
 }

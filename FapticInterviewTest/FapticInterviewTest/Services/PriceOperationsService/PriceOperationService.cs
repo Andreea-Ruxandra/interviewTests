@@ -1,4 +1,6 @@
 ﻿using FapticInterviewTest.Contracts.PricesResponse;
+using FapticInterviewTest.Models;
+using FapticInterviewTest.Services.CRUDOperationsRepository;
 using System.Linq;
 
 namespace FapticInterviewTest.Services.PriceOperationsService
@@ -80,6 +82,13 @@ namespace FapticInterviewTest.Services.PriceOperationsService
             var timePeriodUnixTime = ((DateTimeOffset)period).ToUnixTimeMilliseconds().ToString();
 
             return timePeriodUnixTime;
+        }
+
+        public List<PriceModel> GetAveragePricesFromDb(ICRUDOperationsRepo crudService, DateTime start, DateTime end)
+        {
+            //check if already we have in the database the price for the specific period of time
+            var alreadyExistsPrice = crudService.GetPricesFromDbDuringTimeRange(start, end);
+            return alreadyExistsPrice;
         }
     }
 }

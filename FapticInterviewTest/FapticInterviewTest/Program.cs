@@ -12,6 +12,7 @@ builder.Services.AddBitstampServices();
 builder.Services.AddBitfinexServices();
 builder.Services.AddPriceOperationsServices();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCRUDOperationsServices();
 builder.Services.AddDbContext<PriceDbContext>(options =>
                                               options.UseSqlServer(builder.Configuration.GetConnectionString(connectionString), sqlServerOptionsAction: y => { y.EnableRetryOnFailure(); })) ;
 var app = builder.Build();
