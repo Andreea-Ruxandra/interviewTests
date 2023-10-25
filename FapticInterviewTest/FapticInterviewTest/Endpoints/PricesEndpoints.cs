@@ -66,7 +66,7 @@ namespace FapticInterviewTest.Endpoints
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        internal static IResult GetBitfinexPrices(IPriceOperationsService priceOperationService, IBitfinexService service, string trade, int limit, DateTime start, DateTime end)
+        public static IResult GetBitfinexPrices(IPriceOperationsService priceOperationService, IBitfinexService service, string trade, int limit, DateTime start, DateTime end)
         {
             var startTimeString = priceOperationService.GetUnixTimestampMilliFromDateTime(start);
             var endTimeString = priceOperationService.GetUnixTimestampMilliFromDateTime(end);
@@ -86,7 +86,7 @@ namespace FapticInterviewTest.Endpoints
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        internal static IResult GetBitStampPrices(IPriceOperationsService priceOperationService,IBitstampService service, string marketSymbol, int limit, int step, DateTime start, DateTime end)
+        public static IResult GetBitStampPrices(IPriceOperationsService priceOperationService,IBitstampService service, string marketSymbol, int limit, int step, DateTime start, DateTime end)
         {
             var startTimeInt = priceOperationService.GetUnixTimestampSecFromDateTime(start);
             var endTimeInt = priceOperationService.GetUnixTimestampSecFromDateTime(end);
@@ -110,7 +110,7 @@ namespace FapticInterviewTest.Endpoints
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        internal static IResult GetAggregatedBitcoinPrices(ICRUDOperationsRepo crudService, IPriceOperationsService priceOperationService,IBitstampService bitStampService,IBitfinexService bitfinexService,string marketSymbol,string trade, int limit, int step, DateTime start, DateTime end)
+        public static IResult GetAggregatedBitcoinPrices(ICRUDOperationsRepo crudService, IPriceOperationsService priceOperationService,IBitstampService bitStampService,IBitfinexService bitfinexService,string marketSymbol,string trade, int limit, int step, DateTime start, DateTime end)
         {
             //check if already we have in the database the price for the specific period of time
             var alreadyExistsPrice = crudService.AlreadyExistsInDB(start, end);   
@@ -141,7 +141,7 @@ namespace FapticInterviewTest.Endpoints
 
         }
 
-        internal static IResult GetAveragePricesFromDb(ICRUDOperationsRepo crudService,IPriceOperationsService priceService, DateTime start, DateTime end)
+        public static IResult GetAveragePricesFromDb(ICRUDOperationsRepo crudService,IPriceOperationsService priceService, DateTime start, DateTime end)
         {   
             //get the price list from db
             var averagePriceList = priceService.GetAveragePricesFromDb(crudService,start,end);
